@@ -13,6 +13,61 @@ const MAIN_SITE = "https://nhalife.com";
 function resolveOgPath(pathname: string): string | null {
   const clean = pathname.replace(/\/$/, "") || "/";
 
+  // Homepage: /{lang} or /{lang}/
+  const homeMatch = clean.match(/^\/(ru|en|vi|ko|zh)$/);
+  if (homeMatch) {
+    return `/og/home/?lang=${homeMatch[1]}`;
+  }
+
+  // Coupons list: /{lang}/coupons
+  const couponsListMatch = clean.match(/^\/(ru|en|vi|ko|zh)\/coupons$/);
+  if (couponsListMatch) {
+    return `/og/coupons/?lang=${couponsListMatch[1]}`;
+  }
+
+  // Single coupon: /{lang}/coupons/{couponId}
+  const couponMatch = clean.match(/^\/(ru|en|vi|ko|zh)\/coupons\/(.+)$/);
+  if (couponMatch) {
+    return `/og/coupon/${couponMatch[2]}?lang=${couponMatch[1]}`;
+  }
+
+  // Guides: /{lang}/guides/{slug}
+  const guideMatch = clean.match(/^\/(ru|en|vi|ko|zh)\/guides\/(.+)$/);
+  if (guideMatch) {
+    return `/og/guide/${guideMatch[2]}?lang=${guideMatch[1]}`;
+  }
+
+  // Areas: /{lang}/areas/{slug}
+  const areaMatch = clean.match(/^\/(ru|en|vi|ko|zh)\/areas\/([^/]+)$/);
+  if (areaMatch) {
+    return `/og/area/${areaMatch[2]}?lang=${areaMatch[1]}`;
+  }
+
+  // Best/Intent: /{lang}/best/{slug}
+  const bestMatch = clean.match(/^\/(ru|en|vi|ko|zh)\/best\/(.+)$/);
+  if (bestMatch) {
+    return `/og/best/${bestMatch[2]}?lang=${bestMatch[1]}`;
+  }
+
+  // Jobs: /{lang}/jobs/{jobId}
+  const jobMatch = clean.match(/^\/(ru|en|vi|ko|zh)\/jobs\/(.+)$/);
+  if (jobMatch) {
+    return `/og/job/${jobMatch[2]}?lang=${jobMatch[1]}`;
+  }
+
+  // User profile: /{lang}/user/{nickname}
+  const userMatch = clean.match(/^\/(ru|en|vi|ko|zh)\/user\/(.+)$/);
+  if (userMatch) {
+    return `/og/user/${userMatch[2]}?lang=${userMatch[1]}`;
+  }
+
+  // Marketplace seller shop: /{lang}/marketplace/shop/{sellerId}
+  const shopMatch = clean.match(/^\/(ru|en|vi|ko|zh)\/marketplace\/shop\/(.+)$/);
+  if (shopMatch) {
+    return `/og/shop/${shopMatch[2]}?lang=${shopMatch[1]}`;
+  }
+
+  // Existing section-based routes
   const match = clean.match(
     /^\/(ru|en|vi|ko|zh)\/(business|trip|events|collections|marketplace|news|explore)\/(.+)$/
   );
